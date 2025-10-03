@@ -3,13 +3,17 @@
 :root {
   --font-montserrat: 'Montserrat', sans-serif;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #232829;
+  --color-white: #fff;
+  --color-purple: #3f3cbb;
+  --color-midnight: #1d5b43;
+  --color-orange: #ffbb00;
+  --color-orange-200: #fdb056;
+  --color-bermuda: #78dcca;
 }
 
 body {
   font-family: var(--font-montserrat);
-  color: var(--foreground);
-  background: var(--background);
 }
 
 @keyframes shake {

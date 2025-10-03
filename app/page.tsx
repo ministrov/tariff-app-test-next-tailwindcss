@@ -10,9 +10,12 @@ export default function Home() {
   const [timeLeft] = useState(120);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>();
-  const mappedTarrifs = tariffs?.map((item) => item.id.includes('2'));
+  const fixedData = tariffs?.map((item, index) => ({
+    ...item,
+    id: item.id + '_' + index,
+  }));
 
-  console.log(mappedTarrifs);
+  console.log(fixedData);
 
   useEffect(() => {
     const loadTariffs = async () => {
@@ -57,17 +60,19 @@ export default function Home() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen bg-(--foreground)'>
       <Header timeLeft={timeLeft} />
 
       <main className='container mx-auto px-4 py-8 pt-20'>
         <div className='text-center mb-12'>
-          <h1 className='text-4xl font-bold text-gray-900 mb-4'>Выберите подходящий тариф</h1>
+          <h1 className='text-4xl font-bold text-white mb-8 mt-8'>
+            Выбери подходящий для себя <span className='text-(--color-orange-200)'>тариф</span>
+          </h1>
           <p className='text-xl text-gray-600'>Специальное предложение действует ограниченное время</p>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto'>
-          {tariffs?.map((tarif) => (
+          {fixedData?.map((tarif) => (
             <li key={tarif.id}>{tarif.text}</li>
           ))}
         </div>

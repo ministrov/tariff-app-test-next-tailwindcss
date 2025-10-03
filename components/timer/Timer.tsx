@@ -22,7 +22,7 @@ const Timer = ({ timeLeft }: TimerProps) => {
     `}
     >
       <span>⏰</span>
-      <span>
+      <span className='text-(--color-orange)'>
         {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
       </span>
     </div>
