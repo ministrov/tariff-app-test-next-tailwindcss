@@ -6,7 +6,7 @@ const Header = ({ timeLeft }: TimerProps) => {
     <header className='fixed top-0 left-0 right-0 bg-white shadow-lg z-50'>
       <div className='container mx-auto px-4 py-4'>
         <div className='flex justify-between items-center'>
-          <div className='text-xl font-bold text-gray-900'>Тарифные планы</div>
+          <div className='text-xl font-bold text-gray-900'>Успейте открыть пробную неделю</div>
           <Timer timeLeft={timeLeft} />
         </div>
       </div>
