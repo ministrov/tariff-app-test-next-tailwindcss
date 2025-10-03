@@ -1,14 +1,15 @@
 @import 'tailwindcss';
 
 :root {
+  --font-montserrat: 'Montserrat', sans-serif;
   --background: #ffffff;
   --foreground: #171717;
 }
 
 body {
-  background: var(--background);
+  font-family: var(--font-montserrat);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
 }
 
 @keyframes shake {
