@@ -74,18 +74,37 @@ export default function Home() {
             <Image src={'/tariff-img.png'} width={380} height={767} alt={''} />
           </div>
           <div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto'>
+            <div className='flex flex-wrap mb-[20px]'>
               {fixedData?.map((tarif) => (
                 <li key={tarif.id}>{tarif.text}</li>
               ))}
             </div>
 
+            <div className='flex gap-4 bg-[#484D4E] rounded-[20px] p-5 mb-[30px]'>
+              <Image src={'/exclamation-mark.svg'} width={24} height={24} alt={''} />
+              <p className='text-white text-[16px] leading-6'>
+                Следуя плану на 3 месяца и более, люди получают в 2 раза лучший результат, чем за 1 месяц
+              </p>
+            </div>
+
+            <div className='mb-4'>
+              <label className='flex gap-4 text-[16px] leading-6 text-[#CDCDCD]' htmlFor='copyright'>
+                <input type='checkbox' id='copyright' />Я согласен с офертой рекуррентных платежей и Политикой
+                конфиденциальности
+              </label>
+            </div>
+
             <button
               // onClick={handleBuyClick}
-              className='bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-lg text-lg animate-pulse-custom transition-all duration-300 transform hover:scale-105'
+              className='flex justify-center w-[356px] bg-[#FDB056] hover:bg-amber-200 text-black font-bold text-[20px] py-6 px-8 mb-[14px] rounded-[20px] text-lg animate-pulse-custom transition-all duration-300 transform hover:scale-105'
             >
-              Купить сейчас
+              Купить
             </button>
+            <p className='text-[#9B9B9B] text-[14px] leading-[20px]'>
+              Нажимая кнопку «Купить», Пользователь соглашается на разовое списание денежных средств для получения
+              пожизненного доступа к приложению. Пользователь соглашается, что данные кредитной/дебетовой карты будут
+              сохранены для осуществления покупок дополнительных услуг сервиса в случае желания пользователя.
+            </p>
           </div>
         </div>
 

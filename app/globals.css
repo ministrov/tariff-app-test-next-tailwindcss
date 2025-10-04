@@ -17,6 +17,10 @@ body {
   font-family: var(--font-montserrat);
 }
 
+img {
+  max-width: fit-content;
+}
+
 @keyframes shake {
   0%,
   100% {
