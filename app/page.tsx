@@ -64,7 +64,7 @@ export default function Home() {
     <div className='min-h-screen bg-(--foreground)'>
       <Header timeLeft={timeLeft} />
 
-      <main className='container mx-auto px-4 py-8 pt-24'>
+      <main className='max-w-[1216px] mx-auto pt-24'>
         <h1 className='text-4xl font-bold text-white mb-[110px] mt-8'>
           Выбери подходящий для себя <span className='text-(--color-orange-200)'>тариф</span>
         </h1>
@@ -89,9 +89,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div>
-          <span>гарантия возврата 30 дней</span>
-          <p>
+        <div className='flex flex-col gap-[30px] border-2 border-(--color-stroke) rounded-4xl p-5'>
+          <p className='text-2xl text-[#81FE95] border-2 border-[#81FE95] rounded-4xl pl-8 pr-8 pt-4 pb-4 max-w-fit'>
+            гарантия возврата 30 дней
+          </p>
+          <p className='text-2xl text-[#DCDCDC]'>
             Мы уверены, что наш план сработает для тебя и ты увидишь видимые результаты уже через 4 недели! Мы даже
             готовы полностью вернуть твои деньги в течение 30 дней с момента покупки, если ты не получишь видимых
             результатов.
