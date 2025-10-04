@@ -16,3 +16,8 @@ export const fetchTariffs = async (): Promise<Tariff[] | undefined> => {
     console.log(error);
   }
 };
+
+export const calculateDiscount = (fullPrice: number, price: number): number => {
+  if (fullPrice <= 0 || price <= 0) return 0;
+  return Math.round(((fullPrice - price) / fullPrice) * 100);
+};

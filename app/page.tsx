@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Tariff } from '@/interfaces/tariff.interface';
-import { fetchTariffs } from '@/utils/api';
+import { calculateDiscount, fetchTariffs } from '@/utils/api';
 import Header from '@/components/header/Header';
 import TariffCard from '@/components/tariffCard/TariffCard';
 
@@ -12,10 +12,12 @@ export default function Home() {
   const [timeLeft] = useState(120);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>();
-  const fixedData = tariffs?.map((item, index) => ({
-    ...item,
-    id: item.id + '_' + index,
-  }));
+  const fixedData = tariffs
+    ?.map((item, index) => ({
+      ...item,
+      id: item.id + '_' + index,
+    }))
+    .reverse();
 
   console.log(fixedData);
 
@@ -65,7 +67,7 @@ export default function Home() {
     <div className='min-h-screen bg-(--foreground)'>
       <Header timeLeft={timeLeft} />
 
-      <main className='max-w-[1216px] mx-auto pt-24'>
+      <main className='max-w-[1216px] mx-auto pt-24 pb-32'>
         <h1 className='text-4xl font-bold text-white mb-[110px] mt-8'>
           Выбери подходящий для себя <span className='text-(--color-orange-200)'>тариф</span>
         </h1>
@@ -87,8 +89,8 @@ export default function Home() {
                     // setCheckboxError(false);
                   }}
                   checkboxError={false}
-                  timerExpired={true}
-                  discount={1000}
+                  timerExpired={false}
+                  discount={calculateDiscount(parseInt(tariff.full_price), parseInt(tariff.price))}
                 />
               ))}
             </div>

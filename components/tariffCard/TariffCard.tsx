@@ -24,30 +24,24 @@ export default function TariffCard({
   return (
     <div
       className={`
-      relative bg-[#313637] border-2 border-[#484D4E] rounded-4xl p-5 transition-all duration-300 w-[240px] h-[335px] flex flex-col
+      relative bg-[#313637] border-2 border-[#484D4E] rounded-4xl p-5 transition-all duration-300 w-[240px] flex flex-col items-start
       ${isSelected ? 'border-blue-500 transform scale-105 shadow-xl' : ''}
-      ${tariff.is_best ? 'w-full h-[190px] g:scale-110 lg:-translate-y-2 ring-2 ring-yellow-400' : ''}
+      ${tariff.is_best ? 'flex-row items-center w-full g:scale-110 lg:-translate-y-2 ring-2 ring-[#FDB056]' : ''}
     `}
     >
       {/* Best badge */}
       {tariff.is_best && (
-        <div className='absolute -top-3 left-1/2 transform -translate-x-1/2 z-10'>
-          <span className='bg-yellow-400 text-yellow-900 px-4 py-1 rounded-full text-sm font-bold whitespace-nowrap'>
-            хит!
-          </span>
+        <div className='absolute -top-[0px] right-0 transform -translate-x-1/2 z-10 flex items-center'>
+          <span className=' text-[#FDB056] text-[22px] font-medium whitespace-nowrap'>хит!</span>
         </div>
       )}
 
       {/* Discount badge */}
       {!timerExpired && discount > 0 && (
-        <div className='absolute -top-2 -right-2 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10'>
+        <div className='absolute -top-[1px] -left-[-30px] w-[66px] h-[39px] bg-[#FD5656] text-[22px] font-medium leading-[28px] text-white px-2 py-1 rounded text-sm z-10'>
           -{discount}%
         </div>
       )}
-
-      <div className='text-center mb-6 flex-grow-0'>
-        <h3 className='text-[26px] leading-[32px] font-medium text-white mb-2'>{tariff.period}</h3>
-      </div>
 
       {/* Price section with animation */}
       <div className='text-center mb-6 flex-grow-0'>
@@ -58,9 +52,12 @@ export default function TariffCard({
         `}
         >
           {!timerExpired ? (
-            <div className='space-y-1'>
+            <div className={`space-y-1 ${tariff.is_best ? 'p-0' : 'p-[18px]'}`}>
+              <div className='text-center mt-4 mb-6 flex-grow-0'>
+                <h3 className='text-[26px] leading-[32px] font-medium text-white mb-2'>{tariff.period}</h3>
+              </div>
               <div className='text-[50px] font-semibold text-white'>{tariff.price} ₽</div>
-              <div className='text-lg text-gray-500 line-through'>{tariff.full_price} ₽</div>
+              <div className='text-[24px] text-gray-500 text-end line-through'>{tariff.full_price} ₽</div>
             </div>
           ) : (
             <div className='text-[50px] font-semibold text-white animate-fade-in'>{tariff.full_price} ₽</div>
@@ -68,7 +65,7 @@ export default function TariffCard({
         </div>
       </div>
 
-      <p className='text-white text-[16px] min-h-[40px]'>{tariff.text}</p>
+      <p className='text-white text-[16px]'>{tariff.text}</p>
     </div>
   );
 }
