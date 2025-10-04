@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Tariff } from '@/interfaces/tariff.interface';
 import { fetchTariffs } from '@/utils/api';
 import Header from '@/components/header/Header';
+import TariffCard from '@/components/tariffCard/TariffCard';
 
 export default function Home() {
   const [tariffs, setTariffs] = useState<Tariff[] | undefined>([]);
@@ -74,9 +75,21 @@ export default function Home() {
             <Image src={'/tariff-img.png'} width={380} height={767} alt={''} />
           </div>
           <div>
-            <div className='flex flex-wrap mb-[20px]'>
-              {fixedData?.map((tarif) => (
-                <li key={tarif.id}>{tarif.text}</li>
+            <div className='flex flex-wrap gap-[14px] mb-[20px]'>
+              {fixedData?.map((tariff) => (
+                <TariffCard
+                  key={tariff.id}
+                  tariff={tariff}
+                  isSelected={false}
+                  // isSelected={selectedTariff === tariff.id}
+                  onSelect={() => {
+                    // setSelectedTariff(tariff.id);
+                    // setCheckboxError(false);
+                  }}
+                  checkboxError={false}
+                  timerExpired={true}
+                  discount={1000}
+                />
               ))}
             </div>
 
