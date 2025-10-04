@@ -80,10 +80,10 @@ export default function Home() {
               ))}
             </div>
 
-            <div className='flex gap-4 bg-[#484D4E] rounded-[20px] p-5 mb-[30px]'>
+            <div className='flex gap-4 bg-[#484D4E] rounded-[20px] p-5 mb-[30px] max-w-[499px]'>
               <Image src={'/exclamation-mark.svg'} width={24} height={24} alt={''} />
               <p className='text-white text-[16px] leading-6'>
-                Следуя плану на 3 месяца и более, люди получают в 2 раза лучший результат, чем за 1 месяц
+                Следуя плану на 3 месяца и более, люди получают в 2 раза лучший результат, чем за 1 месяц
               </p>
             </div>
 
@@ -96,7 +96,7 @@ export default function Home() {
 
             <button
               // onClick={handleBuyClick}
-              className='flex justify-center w-[356px] bg-[#FDB056] hover:bg-amber-200 text-black font-bold text-[20px] py-6 px-8 mb-[14px] rounded-[20px] text-lg animate-pulse-custom transition-all duration-300 transform hover:scale-105'
+              className='flex justify-center w-[352px] bg-[#FDB056] hover:bg-amber-200 text-black font-bold text-[20px] py-[20px] mb-[14px] rounded-[20px] text-lg animate-pulse-custom transition-all duration-300 transform hover:scale-105'
             >
               Купить
             </button>
