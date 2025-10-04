@@ -15,16 +15,16 @@ const Timer = ({ timeLeft }: TimerProps) => {
   const seconds = timeLeft % 60;
 
   return (
-    <div className='flex items-center gap-4'>
+    <div className='flex items-center gap-2'>
       <span>
         <Image src={'/star.svg'} width={14} height={14} alt={''} />
       </span>
       <span
-        className={`font-(--font-raleway) text-(--color-orange) ${
+        className={`font-(family-name:--font-raleway) text-3xl text-(--color-orange) ${
           isDanger ? 'bg-red-500 text-white border-red-600 animate-pulse' : ''
         }`}
       >
-        {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+        {minutes.toString().padStart(2, '0')} : {seconds.toString().padStart(2, '0')}
       </span>
       <span>
         <Image src={'/star.svg'} width={14} height={14} alt={''} />
