@@ -1,6 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Тестовое задание на [Next.js], TypeScript, Tailwind css для компании ООО 4А.Консалтинг.
 
-## Getting Started
-
-![Alt text](desktop.jpg);
-![Alt text](mobile.jpg);
+![Alt text](desktop.jpg)
+![Alt text](mobile.jpg)

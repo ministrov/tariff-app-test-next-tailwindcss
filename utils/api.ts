@@ -11,7 +11,7 @@ export const fetchTariffs = async (): Promise<Tariff[] | undefined> => {
     }
 
     const data = await response.json();
-    return data;
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.log(error);
   }
@@ -21,3 +21,11 @@ export const calculateDiscount = (fullPrice: number, price: number): number => {
   if (fullPrice <= 0 || price <= 0) return 0;
   return Math.round(((fullPrice - price) / fullPrice) * 100);
 };
+
+// export const calculateDiscount = (fullPrice: number, price: number): number => {
+//   if (fullPrice <= 0 || price <= 0) {
+//     return 0;
+//   }
+
+//   return Math.round(((fullPrice - price) / fullPrice) * 1000);
+// };

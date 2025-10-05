@@ -38,13 +38,13 @@ export default function TariffCard({
 
       {/* Discount badge */}
       {!timerExpired && discount > 0 && (
-        <div className='absolute -top-[1px] -left-[-30px] w-[66px] h-[39px] bg-[#FD5656] text-[22px] font-medium leading-[28px] text-white px-2 py-1 rounded text-sm z-10'>
+        <div className='absolute -top-[1px] -left-[-30px] max-[375px]:-right-[30px] w-[66px] h-[39px] max-[375px]:w-[48px] max-[375px]:h-[27px] max-[320px]:w-[42px] max-[320px]:h-[23px] bg-[#FD5656] text-[22px] font-medium leading-[28px] max-[375px]:text-[16px] max-[375px]:leading-[22px] text-white px-2 py-1 rounded text-sm z-10'>
           -{discount}%
         </div>
       )}
 
       {/* Price section with animation */}
-      <div className={`text-center mb-6 ${tariff.is_best ? 'mb-[0px]' : ''}`}>
+      <div className={`text-center ${tariff.is_best ? 'mb-[0px]' : 'mb-6 max-[375px]:mb-[0px]'}`}>
         <div
           className={`
           transition-all duration-500
@@ -52,10 +52,10 @@ export default function TariffCard({
         `}
         >
           {!timerExpired ? (
-            <div className={`space-y-1 ${tariff.is_best ? 'p-0' : 'p-[18px]'}`}>
+            <div className={`${tariff.is_best ? 'p-0' : 'p-[18px] max-[375px]:p-[0px]'} max-[375px]:min-w-[121px]`}>
               <div className={`text-center mt-4 mb-6 ${tariff.is_best ? 'mt-[0px] mb-[0px]' : ''}`}>
                 <h3
-                  className={`text-[26px] leading-[32px] font-medium text-white ${
+                  className={`text-[26px] leading-[32px] font-medium max-[375px]:text-[16px] max-[375px]:leading-[22px] text-white ${
                     tariff.is_best ? 'mb-[16px]' : 'mb-2'
                   }`}
                 >
@@ -63,13 +63,17 @@ export default function TariffCard({
                 </h3>
               </div>
               <div
-                className={`text-[50px] font-semibold ${
-                  tariff.is_best ? 'text-[#FDB056] leading-[48px]' : 'text-white'
+                className={`text-[50px] font-semibold max-[375px]:text-[34px] max-[320px]:text-[30px] ${
+                  tariff.is_best
+                    ? 'text-[#FDB056] leading-[48px] max-[375px]:leading-[38px] max-[320px]:leading-[28px]'
+                    : 'text-white'
                 }`}
               >
                 {tariff.price} ₽
               </div>
-              <div className='text-[24px] text-gray-500 text-end line-through'>{tariff.full_price} ₽</div>
+              <div className='text-[24px] max-[375px]:text-[16px] max-[320px]:text-[14px] text-gray-500 text-end line-through'>
+                {tariff.full_price} ₽
+              </div>
             </div>
           ) : (
             <div className='text-[50px] font-semibold text-white animate-fade-in'>{tariff.full_price} ₽</div>
@@ -77,7 +81,9 @@ export default function TariffCard({
         </div>
       </div>
 
-      <p className={`text-white text-[16px] ${tariff.is_best ? 'max-w-[328px]' : ''}`}>{tariff.text}</p>
+      <p className={`text-white text-[16px] max-[375px]:text-[12px] ${tariff.is_best ? 'max-w-[328px]' : ''}`}>
+        {tariff.text}
+      </p>
     </div>
   );
 }

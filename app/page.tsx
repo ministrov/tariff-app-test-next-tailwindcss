@@ -2,16 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Tariff } from '@/interfaces/tariff.interface';
-import { calculateDiscount, fetchTariffs } from '@/utils/api';
 import Header from '@/components/header/Header';
 import TariffCard from '@/components/tariffCard/TariffCard';
+import { calculateDiscount, fetchTariffs } from '@/utils/api';
+import { Tariff } from '@/interfaces/tariff.interface';
 
 export default function Home() {
-  const [tariffs, setTariffs] = useState<Tariff[] | undefined>([]);
-  const [timeLeft] = useState(120);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>();
+  const [tariffs, setTariffs] = useState<Tariff[]>([]);
+  const [selectedTariff, setSelectedTariff] = useState<string | null>(null);
+  const [timerExpired, setTimerExpired] = useState(false);
+  const [checkboxError, setCheckboxError] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const fixedData = tariffs
     ?.map((item, index) => ({
       ...item,
@@ -19,15 +22,24 @@ export default function Home() {
     }))
     .reverse();
 
-  console.log(fixedData);
-
+  console.log(selectedTariff);
   useEffect(() => {
     const loadTariffs = async () => {
       try {
         setIsLoading(true);
         const data = await fetchTariffs();
 
+        if (!data) {
+          throw new Error('No data received');
+        }
+
         setTariffs(data);
+
+        // Set initial selected tariff (best one)
+        const bestTariff = data.find((tariff: Tariff) => tariff.is_best) as Tariff;
+        if (bestTariff) {
+          setSelectedTariff(bestTariff.id);
+        }
       } catch (err) {
         setError('Не удалось загрузить тарифы. Пожалуйста, попробуйте позже.');
         console.error('Error loading tariffs:', err);
@@ -38,6 +50,33 @@ export default function Home() {
 
     loadTariffs();
   }, []);
+
+  // Timer logic
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setTimerExpired(true);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
+
+  const handleBuyClick = () => {
+    if (!selectedTariff) {
+      setCheckboxError(true);
+      return;
+    }
+
+    // Reset error and proceed with purchase
+    setCheckboxError(false);
+    // Add purchase logic here
+    console.log('Purchasing tariff:', selectedTariff);
+    alert(`Выбран тариф: ${tariffs.find((t) => t.id === selectedTariff)?.period}`);
+  };
 
   if (error) {
     return (
@@ -68,13 +107,19 @@ export default function Home() {
       <Header timeLeft={timeLeft} />
 
       <main className='max-w-[1216px] max-[1285px]:px-[16px] mx-auto pt-24 pb-32'>
-        <h1 className='text-[40px] max-[375px]:text-[24px] max-[320px]:text-[22px] font-bold text-white mb-[110px] mt-8'>
+        <h1 className='text-[40px] max-[375px]:text-[24px] max-[320px]:text-[22px] max-[375px]:text-left max-[375px]:leading-[24px] font-bold text-white mb-[110px] max-[375px]:mb-[20px] mt-8'>
           Выбери подходящий для себя <span className='text-(--color-orange-200)'>тариф</span>
         </h1>
 
         <div className='flex gap-[87px] max-[1285px]:flex-col max-[1285px]:gap-1 max-[1285px]:items-center mb-[66px]'>
           <div>
-            <Image className='max-[768px]:w-full' src={'/tariff-img.png'} width={380} height={767} alt={''} />
+            <Image
+              className='max-[768px]:w-full max-[375px]:w-[124px] max-[375px]:h-[250px] max-[320px]:w-[99px] max-[320px]:h-[200px]'
+              src={'/tariff-img.png'}
+              width={380}
+              height={767}
+              alt={''}
+            />
           </div>
           <div>
             <div className='flex flex-wrap max-[1285px]:flex-col max-[1285px]:items-center gap-[14px] mb-[20px]'>
@@ -82,14 +127,14 @@ export default function Home() {
                 <TariffCard
                   key={tariff.id}
                   tariff={tariff}
-                  isSelected={false}
-                  // isSelected={selectedTariff === tariff.id}
+                  // isSelected={false}
+                  isSelected={selectedTariff === tariff.id}
                   onSelect={() => {
-                    // setSelectedTariff(tariff.id);
-                    // setCheckboxError(false);
+                    setSelectedTariff(tariff.id);
+                    setCheckboxError(false);
                   }}
-                  checkboxError={false}
-                  timerExpired={false}
+                  checkboxError={checkboxError && !selectedTariff}
+                  timerExpired={timerExpired}
                   discount={calculateDiscount(parseInt(tariff.full_price), parseInt(tariff.price))}
                 />
               ))}
@@ -113,7 +158,7 @@ export default function Home() {
             </div>
 
             <button
-              // onClick={handleBuyClick}
+              onClick={handleBuyClick}
               className='flex justify-center w-[352px] max-[375px]:w-full bg-[#FDB056] hover:bg-amber-200 text-black font-bold text-[20px] py-[20px] max-[320px]:py-[16px] mb-[14px] max-[768px]:mb-[20px] rounded-[20px] text-lg animate-pulse-custom transition-all duration-300 transform hover:scale-105'
             >
               Купить
