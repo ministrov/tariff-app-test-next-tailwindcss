@@ -10,6 +10,7 @@ import { Tariff } from '@/interfaces/tariff.interface';
 export default function Home() {
   const [tariffs, setTariffs] = useState<Tariff[]>([]);
   const [selectedTariff, setSelectedTariff] = useState<string | null>(null);
+  const [isSelected] = useState<boolean>(false);
   const [timerExpired, setTimerExpired] = useState(false);
   const [checkboxError, setCheckboxError] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
@@ -22,7 +23,7 @@ export default function Home() {
     }))
     .reverse();
 
-  console.log(selectedTariff);
+  // console.log(selectedTariff);
   useEffect(() => {
     const loadTariffs = async () => {
       try {
@@ -78,6 +79,11 @@ export default function Home() {
     alert(`Выбран тариф: ${tariffs.find((t) => t.id === selectedTariff)?.period}`);
   };
 
+  // const handleOnCange = (e: InputEvent) => {
+  //   console.log(e.target);
+  //   setIsSelected(true);
+  // };
+
   if (error) {
     return (
       <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
@@ -127,7 +133,6 @@ export default function Home() {
                 <TariffCard
                   key={tariff.id}
                   tariff={tariff}
-                  // isSelected={false}
                   isSelected={selectedTariff === tariff.id}
                   onSelect={() => {
                     setSelectedTariff(tariff.id);
@@ -135,7 +140,7 @@ export default function Home() {
                   }}
                   checkboxError={checkboxError && !selectedTariff}
                   timerExpired={timerExpired}
-                  discount={calculateDiscount(parseInt(tariff.full_price), parseInt(tariff.price))}
+                  discount={calculateDiscount(tariff.full_price, tariff.price)}
                 />
               ))}
             </div>
@@ -149,11 +154,23 @@ export default function Home() {
 
             <div className='mb-4 max-[768px]:mb-[20px]'>
               <label
-                className='flex gap-4 text-[16px] max-[375px]:text-[12px] leading-6 text-[#CDCDCD]'
+                className={`flex gap-4 text-[16px] max-[375px]:text-[12px] leading-6 text-[#CDCDCD] ${
+                  isSelected
+                    ? 'bg-blue-500 border-blue-500'
+                    : checkboxError
+                    ? 'bg-red-100 border-red-500 animate-shake'
+                    : 'bg-white border-gray-300'
+                }`}
                 htmlFor='copyright'
               >
-                <input type='checkbox' id='copyright' />Я согласен с офертой рекуррентных платежей и Политикой
-                конфиденциальности
+                <input
+                  type='checkbox'
+                  id='copyright'
+                  name='copyright'
+                  checked={isSelected}
+                  onChange={(e) => console.log(e.target.value)}
+                />
+                Я согласен с офертой рекуррентных платежей и Политикой конфиденциальности
               </label>
             </div>
 
