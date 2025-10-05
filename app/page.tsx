@@ -67,17 +67,17 @@ export default function Home() {
     <div className='min-h-screen bg-(--foreground)'>
       <Header timeLeft={timeLeft} />
 
-      <main className='max-w-[1216px] mx-auto pt-24 pb-32'>
-        <h1 className='text-4xl font-bold text-white mb-[110px] mt-8'>
+      <main className='max-w-[1216px] max-[1285px]:px-[16px] mx-auto pt-24 pb-32'>
+        <h1 className='text-[40px] max-[375px]:text-[24px] max-[320px]:text-[22px] font-bold text-white mb-[110px] mt-8'>
           Выбери подходящий для себя <span className='text-(--color-orange-200)'>тариф</span>
         </h1>
 
-        <div className='flex gap-[87px] mb-[66px]'>
+        <div className='flex gap-[87px] max-[1285px]:flex-col max-[1285px]:gap-1 max-[1285px]:items-center mb-[66px]'>
           <div>
             <Image src={'/tariff-img.png'} width={380} height={767} alt={''} />
           </div>
           <div>
-            <div className='flex flex-wrap gap-[14px] mb-[20px]'>
+            <div className='flex flex-wrap max-[1285px]:flex-col max-[1285px]:items-center gap-[14px] mb-[20px]'>
               {fixedData?.map((tariff) => (
                 <TariffCard
                   key={tariff.id}

@@ -20,7 +20,7 @@ const Timer = ({ timeLeft }: TimerProps) => {
         <Image src={'/star.svg'} width={14} height={14} alt={''} />
       </span>
       <span
-        className={`font-(family-name:--font-raleway) text-3xl text-(--color-orange) ${
+        className={`font-(family-name:--font-raleway) text-[40px] font-bold max-[375px]:text-[32px] max-[320px]:text-[28px] text-(--color-orange) ${
           isDanger ? 'bg-red-500 text-white border-red-600 animate-pulse' : ''
         }`}
       >
