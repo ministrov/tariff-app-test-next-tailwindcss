@@ -24,8 +24,6 @@ export default function Home() {
     }))
     .reverse();
 
-  // console.log(selectedTariff);
-
   useEffect(() => {
     const loadTariffs = async () => {
       try {
@@ -155,25 +153,6 @@ export default function Home() {
             </div>
 
             <div className='mb-4 max-[768px]:mb-[20px]'>
-              {/* <label
-                className={`flex gap-4 text-[16px] max-[375px]:text-[12px] leading-6 text-[#CDCDCD] ${
-                  isSelected
-                    ? 'bg-blue-500 border-blue-500'
-                    : checkboxError
-                    ? 'bg-red-100 border-red-500 animate-shake'
-                    : 'bg-white border-gray-300'
-                }`}
-                htmlFor='copyright'
-              >
-                <input
-                  type='checkbox'
-                  id='copyright'
-                  name='copyright'
-                  checked={isSelected}
-                  onChange={(e) => console.log(e.target.value)}
-                />
-                Я согласен с офертой рекуррентных платежей и Политикой конфиденциальности
-              </label> */}
               <label
                 className={`flex gap-4 text-[16px] max-[375px]:text-[12px] leading-6 ${
                   checkboxError ? 'text-red-500 animate-shake' : 'text-[#CDCDCD]'
@@ -187,7 +166,7 @@ export default function Home() {
                   checked={isAgreed}
                   onChange={(e) => {
                     setIsAgreed(e.target.checked);
-                    setCheckboxError(false); // ✅ Сбрасываем ошибку при изменении
+                    setCheckboxError(false);
                   }}
                 />
                 Я согласен с офертой рекуррентных платежей и Политикой конфиденциальности
