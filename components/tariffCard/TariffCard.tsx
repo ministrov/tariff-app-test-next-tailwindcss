@@ -25,7 +25,7 @@ export default function TariffCard({
     <div
       onClick={onSelect}
       className={`
-      relative bg-[#313637] border-2 border-[#484D4E] rounded-4xl p-5 transition-all duration-300 w-[240px] max-[768px]:w-full flex flex-col max-[768px]:flex-row max-[768px]:justify-center max-[768px]:gap-[40px] items-center
+      relative bg-[#313637] border-2 border-[#484D4E] rounded-4xl p-5 transition-all duration-300 w-[240px] max-[768px]:w-full flex flex-col max-[768px]:flex-row max-[768px]:justify-center max-[768px]:gap-[40px] items-center cursor-pointer
       ${isSelected && !tariff.is_best ? 'border-blue-500 transform scale-105 shadow-xl' : ''}
       ${checkboxError && !isSelected ? 'border-red-500 animate-shake' : ''}
       ${tariff.is_best ? 'flex-row justify-center gap-[40px] w-full ring-2 ring-[#FDB056] p-6' : ''}
