@@ -10,20 +10,22 @@ import { Tariff } from '@/interfaces/tariff.interface';
 export default function Home() {
   const [tariffs, setTariffs] = useState<Tariff[]>([]);
   const [selectedTariff, setSelectedTariff] = useState<string | null>(null);
-  const [isSelected] = useState<boolean>(false);
+  const [isAgreed, setIsAgreed] = useState<boolean>(false);
   const [timerExpired, setTimerExpired] = useState(false);
   const [checkboxError, setCheckboxError] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const fixedData = tariffs
+  const displayedTariffs = tariffs
     ?.map((item, index) => ({
       ...item,
-      id: item.id + '_' + index,
+      displayId: item.id + '_' + index,
+      originalId: item.id,
     }))
     .reverse();
 
   // console.log(selectedTariff);
+
   useEffect(() => {
     const loadTariffs = async () => {
       try {
@@ -37,7 +39,7 @@ export default function Home() {
         setTariffs(data);
 
         // Set initial selected tariff (best one)
-        const bestTariff = data.find((tariff: Tariff) => tariff.is_best) as Tariff;
+        const bestTariff = data.find((tariff: Tariff) => tariff.is_best);
         if (bestTariff) {
           setSelectedTariff(bestTariff.id);
         }
@@ -67,22 +69,22 @@ export default function Home() {
   }, [timeLeft]);
 
   const handleBuyClick = () => {
-    if (!selectedTariff) {
+    if (!isAgreed) {
       setCheckboxError(true);
       return;
     }
 
-    // Reset error and proceed with purchase
-    setCheckboxError(false);
-    // Add purchase logic here
-    console.log('Purchasing tariff:', selectedTariff);
-    alert(`Выбран тариф: ${tariffs.find((t) => t.id === selectedTariff)?.period}`);
-  };
+    if (!selectedTariff) {
+      return;
+    }
 
-  // const handleOnCange = (e: InputEvent) => {
-  //   console.log(e.target);
-  //   setIsSelected(true);
-  // };
+    setCheckboxError(false);
+    console.log('Purchasing tariff:', selectedTariff);
+
+    // Ищем по оригинальному ID в оригинальном массиве
+    const selectedTariffData = tariffs.find((t) => t.id === selectedTariff);
+    alert(`Выбран тариф: ${selectedTariffData?.period}`);
+  };
 
   if (error) {
     return (
@@ -129,13 +131,13 @@ export default function Home() {
           </div>
           <div>
             <div className='flex flex-wrap max-[1285px]:flex-col max-[1285px]:items-center gap-[14px] mb-[20px]'>
-              {fixedData?.map((tariff) => (
+              {displayedTariffs?.map((tariff) => (
                 <TariffCard
-                  key={tariff.id}
+                  key={tariff.displayId}
                   tariff={tariff}
-                  isSelected={selectedTariff === tariff.id}
+                  isSelected={selectedTariff === tariff.originalId}
                   onSelect={() => {
-                    setSelectedTariff(tariff.id);
+                    setSelectedTariff(tariff.originalId);
                     setCheckboxError(false);
                   }}
                   checkboxError={checkboxError && !selectedTariff}
@@ -153,7 +155,7 @@ export default function Home() {
             </div>
 
             <div className='mb-4 max-[768px]:mb-[20px]'>
-              <label
+              {/* <label
                 className={`flex gap-4 text-[16px] max-[375px]:text-[12px] leading-6 text-[#CDCDCD] ${
                   isSelected
                     ? 'bg-blue-500 border-blue-500'
@@ -169,6 +171,24 @@ export default function Home() {
                   name='copyright'
                   checked={isSelected}
                   onChange={(e) => console.log(e.target.value)}
+                />
+                Я согласен с офертой рекуррентных платежей и Политикой конфиденциальности
+              </label> */}
+              <label
+                className={`flex gap-4 text-[16px] max-[375px]:text-[12px] leading-6 ${
+                  checkboxError ? 'text-red-500 animate-shake' : 'text-[#CDCDCD]'
+                }`}
+                htmlFor='copyright'
+              >
+                <input
+                  type='checkbox'
+                  id='copyright'
+                  name='copyright'
+                  checked={isAgreed}
+                  onChange={(e) => {
+                    setIsAgreed(e.target.checked);
+                    setCheckboxError(false); // ✅ Сбрасываем ошибку при изменении
+                  }}
                 />
                 Я согласен с офертой рекуррентных платежей и Политикой конфиденциальности
               </label>
